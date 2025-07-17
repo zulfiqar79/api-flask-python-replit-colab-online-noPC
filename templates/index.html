@@ -1,19 +1,23 @@
-
 <!DOCTYPE html>
 <html>
-<head><title>PokéAPI Flask</title></head>
+<head>
+    <title>PokeAPI Flask</title>
+</head>
 <body>
-  <h1>Consultá un Pokémon:</h1>
-  <input id="nombre" placeholder="ej. bulbasaur">
-  <button onclick="buscar()">Buscar</button>
-  <pre id="resultado"></pre>
-  <script>
-    async function buscar() {
-      const name = document.getElementById("nombre").value;
-      const resp = await fetch(`/pokemon/${name}`);
-      const data = await resp.json();
-      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
-    }
-  </script>
+    <h1>Consultá un Pokémon:</h1>
+    <form method="POST">
+        <input type="text" name="nombre" placeholder="ej. bulbasaur" />
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if pokemon %}
+        <h2>{{ pokemon.nombre }}</h2>
+        <p>Tipo: {{ pokemon.tipo }}</p>
+        <img src="{{ pokemon.imagen }}" alt="Imagen de {{ pokemon.nombre }}">
+    {% endif %}
 </body>
 </html>

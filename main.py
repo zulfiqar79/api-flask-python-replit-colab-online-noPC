@@ -1,40 +1,26 @@
-
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request
 import requests
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+@app.route("/", methods=["GET", "POST"])
+def index():
+    pokemon_data = None
+    error = None
 
-@app.route("/pokemon")
-def obtener_pokemon_pikachu():
-    url = "https://pokeapi.co/api/v2/pokemon/pikachu"
-    response = requests.get(url)
-    data = response.json()
-    imagen = data["sprites"]["front_default"]
-    return jsonify({
-        "nombre": data["name"],
-        "altura": data["height"],
-        "peso": data["weight"],
-        "imagen": imagen,
-        "habilidades": [h["ability"]["name"] for h in data["abilities"]]
-    })
+    if request.method == "POST":
+        nombre = request.form["nombre"].lower()
+        url = f"https://pokeapi.co/api/v2/pokemon/{nombre}"
+        respuesta = requests.get(url)
 
-@app.route("/pokemon/<nombre>")
-def obtener_pokemon(nombre):
-    url = f"https://pokeapi.co/api/v2/pokemon/{nombre}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return jsonify({
-            "nombre": data["name"],
-            "altura": data["height"],
-            "peso": data["weight"]
-        })
-    else:
-        return jsonify({"error": "Pokémon no encontrado"}), 404
+        if respuesta.status_code == 200:
+            datos = respuesta.json()
+            pokemon_data = {
+                "nombre": datos["name"].capitalize(),
+                "imagen": datos["sprites"]["front_default"],
+                "tipo": datos["types"][0]["type"]["name"].capitalize()
+            }
+        else:
+            error = "Pokémon no encontrado. Revisá el nombre."
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000)
+    return render_template("index.html", pokemon=pokemon_data, error=error)
