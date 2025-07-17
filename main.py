@@ -24,3 +24,6 @@ def index():
             error = "Pokémon no encontrado. Revisá el nombre."
 
     return render_template("index.html", pokemon=pokemon_data, error=error)
+
+if __name__ == "__main__":
+    app.run()
