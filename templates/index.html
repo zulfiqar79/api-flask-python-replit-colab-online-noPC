@@ -2,24 +2,28 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consulta Pokémon</title>
+    <title>PokéAPI Flask</title>
 </head>
 <body>
     <h1>Consultá un Pokémon:</h1>
-    <form action="/" method="POST">
-        <input type="text" name="pokemon_name" placeholder="Nombre del Pokémon" required>
+    <form method="POST">
+        <input type="text" name="pokemon_name" placeholder="Ejemplo: pikachu" required>
         <button type="submit">Buscar</button>
     </form>
 
     {% if pokemon %}
-        <h2>Resultado:</h2>
-        <p><strong>Nombre:</strong> {{ pokemon.nombre }}</p>
-        <p><strong>Altura:</strong> {{ pokemon.altura }}</p>
-        <p><strong>Peso:</strong> {{ pokemon.peso }}</p>
-        {% if pokemon.imagen %}
-            <img src="{{ pokemon.imagen }}" alt="Imagen de {{ pokemon.nombre }}" style="max-width:200px;">
+        {% if pokemon.error %}
+            <p style="color:red;">{{ pokemon.error }}</p>
+        {% else %}
+            <p>Nombre: {{ pokemon.nombre }}</p>
+            <p>Altura: {{ pokemon.altura }}</p>
+            <p>Peso: {{ pokemon.peso }}</p>
+            {% if pokemon.imagen %}
+                <img src="{{ pokemon.imagen }}" alt="Imagen de {{ pokemon.nombre }}">
+            {% endif %}
         {% endif %}
     {% endif %}
 </body>
 </html>
+
 
