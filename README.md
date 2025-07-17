@@ -1,10 +1,14 @@
-imagen app api web: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/029854af-e123-4216-a28f-5a31931bb1b6" />
+*imagen app api web: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/029854af-e123-4216-a28f-5a31931bb1b6" />
 
-subido a servidor: (RENDER.COM) https://dashboard.render.com/web/srv-d1s4c5p5pdvs73aduf4g/deploys/dep-d1s4c615pdvs73adufng?r=2025-07-17%4000%3A37%3A49%7E2025-07-17%4000%3A41%3A35 
+*subido a servidor: (RENDER.COM) https://dashboard.render.com/web/srv-d1s4c5p5pdvs73aduf4g/deploys/dep-d1s4c615pdvs73adufng?r=2025-07-17%4000%3A37%3A49%7E2025-07-17%4000%3A41%3A35 
 USR RENDER -> GITHUB -> USR: JCHMKY _ E:FIUBA AR
+
+*HECHO CON REPLIT.COM para no consumir recuros ram procesador PC
+https://replit.com/@iaroskarel/api-mercado-flask#templates/index.html
 
 🚀 Gracias por visitar este proyecto
 Hecho con ❤️ para aprender cómo hacer una API web sencilla usando Flask, PokéAPI y Render.
+
 
 ------------------------------------------------- MAS DETALLES -----------------------------------------------------------------------------------------------
 🌐 PokéAPI Flask - App con Flask + Render
