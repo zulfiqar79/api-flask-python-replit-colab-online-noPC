@@ -15,9 +15,16 @@ def index():
 
         if respuesta.status_code == 200:
             datos = respuesta.json()
+
+            # Verifica si hay imagen disponible
+            if datos["sprites"]["front_default"]:
+                imagen = datos["sprites"]["front_default"]
+            else:
+                imagen = "https://via.placeholder.com/150?text=Sin+imagen"
+
             pokemon_data = {
                 "nombre": datos["name"].capitalize(),
-                "imagen": datos["sprites"]["front_default"],
+                "imagen": imagen,
                 "tipo": datos["types"][0]["type"]["name"].capitalize()
             }
         else:
