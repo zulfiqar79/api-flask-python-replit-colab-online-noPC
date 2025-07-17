@@ -1,7 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request
 import requests
 
 app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/api/pokemon/<nombre>')
 def get_pokemon(nombre):
@@ -11,11 +15,14 @@ def get_pokemon(nombre):
         return jsonify({'error': 'Pokémon no encontrado'}), 404
 
     data = response.json()
+
+    imagen_url = data['sprites']['front_default']  # puede ser None
+
     resultado = {
         'nombre': data['name'],
         'altura': data['height'],
         'peso': data['weight'],
-        'imagen': data['sprites']['front_default']  # URL de imagen frontal
+        'imagen': imagen_url if imagen_url else "https://via.placeholder.com/96"
     }
 
     return jsonify(resultado)
