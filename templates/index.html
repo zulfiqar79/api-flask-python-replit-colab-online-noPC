@@ -5,52 +5,37 @@
     <title>PokéAPI Flask</title>
 </head>
 <body>
-    <h1>Consultá un Pokémon:</h1>
-    <form id="pokemonForm">
-        <input type="text" id="pokemonInput" placeholder="pikachu" />
-        <button type="submit">Buscar</button>
-    </form>
+    <h2>Consultá un Pokémon:</h2>
+    <input type="text" id="pokemon-name" placeholder="Ejemplo: pikachu" />
+    <button onclick="buscarPokemon()">Buscar</button>
 
-    <pre id="result"></pre>
-    <img id="pokemonImage" src="" alt="" style="display:none; max-width:200px;"/>
+    <pre id="resultado"></pre>
+    <img id="pokemon-img" src="" alt="Imagen Pokémon" style="display:none; width: 150px;"/>
 
     <script>
-        const form = document.getElementById('pokemonForm');
-        const result = document.getElementById('result');
-        const image = document.getElementById('pokemonImage');
+        async function buscarPokemon() {
+            const nombre = document.getElementById('pokemon-name').value.trim();
+            if (!nombre) return alert('Ingrese el nombre de un Pokémon');
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const pokemon = document.getElementById('pokemonInput').value.toLowerCase();
+            const res = await fetch(`/api/pokemon/${nombre}`);
+            const data = await res.json();
 
-            try {
-                const response = await fetch(`/api/pokemon/${pokemon}`);
-                if (!response.ok) {
-                    result.textContent = 'Pokémon no encontrado.';
-                    image.style.display = 'none';
-                    return;
-                }
-                const data = await response.json();
-
-                // Mostrar JSON bonito
-                result.textContent = JSON.stringify(data, null, 4);
-
-                // Si el JSON tiene una propiedad 'imagen' o 'image' con URL, mostrar la imagen
-                if (data.imagen || data.image) {
-                    image.src = data.imagen || data.image;
-                    image.alt = data.nombre || pokemon;
-                    image.style.display = 'block';
-                } else {
-                    image.style.display = 'none';
-                }
-            } catch (error) {
-                result.textContent = 'Error al consultar la API.';
-                image.style.display = 'none';
+            if (res.status !== 200) {
+                document.getElementById('resultado').textContent = data.error;
+                document.getElementById('pokemon-img').style.display = 'none';
+                return;
             }
-        });
+
+            document.getElementById('resultado').textContent = JSON.stringify(data, null, 2);
+
+            const img = document.getElementById('pokemon-img');
+            img.src = data.imagen;
+            img.style.display = 'block';
+        }
     </script>
 </body>
 </html>
+
 
 
 
